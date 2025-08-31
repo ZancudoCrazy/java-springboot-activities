@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
+import com.adrian.practice.app.dto.context.ExceptionContext;
+
 import lombok.Getter;
 
 /**
@@ -32,6 +34,7 @@ public class HandlerController {
     @ExceptionHandler(HttpException.class)
     public ResponseEntity<?> httpExceptionhandle(HttpException ex) {
         HttpStatus status = ex.getHttpError();
+        loadExceptionContext(ex);
         return ResponseEntity.status(status).body(ErrorResponse.create(status, ex));
     }
 
@@ -43,6 +46,7 @@ public class HandlerController {
     @ExceptionHandler(NoHandlerFoundException.class)
     public ResponseEntity<?> noHandlerExceptionFound(NoHandlerFoundException ex) {
         ErrorResponse response = ErrorResponse.create(HttpStatus.NOT_FOUND, ex);
+        loadExceptionContext(ex);
         return ResponseEntity.status(ex.getStatusCode()).body(response);
     }
 
@@ -55,9 +59,18 @@ public class HandlerController {
     @ExceptionHandler({NullPointerException.class, IllegalArgumentException.class})
     public ResponseEntity<?> runtimeExceptionHandle(Exception ex) {
         ErrorResponse response = ErrorResponse.create(HttpStatus.INTERNAL_SERVER_ERROR, ex);
+        loadExceptionContext(ex);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
 
+    /**
+     * Loads the exception into the ExceptionContext for thread-local storage.
+     * @param Exception ex
+     */
+    private void loadExceptionContext(Exception ex) {
+        ExceptionContext.setCurrentException(ex);
+    }
+    
     /**
      * Static inner class representing the structure of the error response.
      * It includes fields for error message, detailed message, and HTTP status code.
