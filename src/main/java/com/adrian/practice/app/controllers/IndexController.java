@@ -15,4 +15,9 @@ public class IndexController {
     public ResponseEntity<Map<String, String>> index(){
         throw HttpException.notFound("Resource not found");
     }
+
+    @GetMapping("/")
+    public ResponseEntity<Map<String, String>> home(){
+        return ResponseEntity.ok(Map.of("message", "Welcome to the home page!"));
+    }
 }
