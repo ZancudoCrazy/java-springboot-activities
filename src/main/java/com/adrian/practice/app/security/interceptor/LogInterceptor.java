@@ -1,14 +1,10 @@
 package com.adrian.practice.app.security.interceptor;
 
-import java.util.Optional;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
-
-import com.adrian.practice.app.dto.context.ExceptionContext;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -38,7 +34,6 @@ public class LogInterceptor implements HandlerInterceptor{
         request.setAttribute("startTime", startTime);
 
         logger.info("Request URL: {}", request.getRequestURL());
-        logger.info("Start Time: {}", startTime);
         return true;
     }
 
@@ -55,16 +50,13 @@ public class LogInterceptor implements HandlerInterceptor{
         long endTime = System.currentTimeMillis();
         long executeTime = endTime - startTime;
 
-        Optional<Exception> optional = Optional.ofNullable(ExceptionContext.getCurrentException());
-        if (optional.isPresent()) {
-            logger.error("Exception occurred: ", optional.get());
-            ExceptionContext.clear();
-        }
+        
 
-        logger.info("End Time: {}", endTime);
+        // logger.info("End Time: {}", endTime);
         logger.info("Execute Time: {} ms", executeTime);
 
     }
 
-    
+
+
 }

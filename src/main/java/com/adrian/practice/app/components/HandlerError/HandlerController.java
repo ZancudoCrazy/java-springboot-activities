@@ -68,9 +68,10 @@ public class HandlerController {
      * @param Exception ex
      */
     private void loadExceptionContext(Exception ex) {
+        System.err.println("Loading exception into context..."+ex.getMessage());
         ExceptionContext.setCurrentException(ex);
     }
-    
+
     /**
      * Static inner class representing the structure of the error response.
      * It includes fields for error message, detailed message, and HTTP status code.

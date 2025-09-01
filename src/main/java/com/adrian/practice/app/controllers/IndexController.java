@@ -16,6 +16,11 @@ public class IndexController {
         throw HttpException.notFound("Resource not found");
     }
 
+    @GetMapping("/bad-request")
+    public ResponseEntity<Map<String, String>> badRequest(){
+        throw HttpException.badRequest("Bad request made");
+    }
+
     @GetMapping("/")
     public ResponseEntity<Map<String, String>> home(){
         return ResponseEntity.ok(Map.of("message", "Welcome to the home page!"));
