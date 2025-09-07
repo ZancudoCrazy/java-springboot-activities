@@ -1,7 +1,8 @@
 package com.adrian.practice.app;
 
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import javafx.application.Application;
 
 /**
  * Main class of the Spring Boot application.
@@ -10,10 +11,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * component scanning, auto-configuration, and property support.
  */
 @SpringBootApplication
-public class AppApplication {
+public class MainEntry {
 
 	public static void main(String[] args) {
-		SpringApplication.run(AppApplication.class, args);
+		Application.launch(FxApplication.class, args);
 	}
 
 }
